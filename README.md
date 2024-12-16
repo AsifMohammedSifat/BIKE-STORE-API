@@ -4,7 +4,7 @@ This repository contains the code for the **Bike Store API**, a backend applicat
 
 ## Live URL
 
-[]
+[BIKE STORE API](https://bike-store-api-seven.vercel.app/)
 
 ## Features
 
@@ -23,7 +23,7 @@ This repository contains the code for the **Bike Store API**, a backend applicat
 - **CORS**: Middleware for enabling cross-origin requests.
 - **ESLint & Prettier**: Code linting and formatting to maintain code quality.
 
-## Setup Instructions
+## How to Start the Project?
 
 Follow these steps to set up the project on your local machine.
 
@@ -91,7 +91,6 @@ Follow the guides below to set up ESLint and Prettier for linting and formatting
 - [Linting TypeScript with ESLint and Prettier](https://blog.logrocket.com/linting-typescript-eslint-prettier/)
 - [Express, TypeScript, ESLint, Prettier Setup Guide](https://dev.to/shafayat/-express-typescript-eslint-prettiersetup-5fhg)
 
-
 # Setup Instructions
 
 ### Prerequisites
@@ -139,5 +138,7 @@ npm run start:dev
 ### 5. Access the API
 
 ```bash
+http://localhost:5000/api/
 http://localhost:5000/api/products
+
 ```
