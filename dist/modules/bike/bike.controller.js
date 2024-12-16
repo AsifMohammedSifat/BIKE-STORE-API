@@ -104,6 +104,10 @@ const getSingleBike = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     try {
         const id = req.params.bikeId;
         const result = yield bike_service_1.BikeService.getSingleBikeFromDB(id);
+        // handle --> if result is null or not found
+        if (!result) {
+            throw new Error('Sorry! No Bike found with the provided ID');
+        }
         res.send({
             message: 'Bikes retrieved successfully!',
             status: true,
@@ -111,58 +115,71 @@ const getSingleBike = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         });
     }
     catch (err) {
-        res.json({
-            message: 'Sorry! No Bike found',
+        res.status(400).json({
+            message: 'Sorry! No Data found with the provided ID',
             success: false,
-            err,
+            error: err instanceof Error ? err.message : 'Unknown error',
+            data: {},
         });
     }
 });
-//4. Update a Bike
+// 4. Update a Bike
 const updateBike = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.params.bikeId;
+        // handle if bikeId is not provided in the URL
+        if (!id) {
+            throw new Error('Bike ID is required to update the bike');
+        }
         const data = req.body;
         const result = yield bike_service_1.BikeService.updateBikeToDB(id, data);
+        // handle if result is null or not found
+        if (!result) {
+            throw new Error('Sorry! No bike found with the provided ID');
+        }
         res.send({
-            message: 'Bike Updated successfully!',
+            message: 'Bike updated successfully!',
             status: true,
             data: result,
         });
     }
     catch (err) {
-        res.json({
-            message: 'Sorry! Update failed. No data found. :(',
+        res.status(404).json({
+            message: 'Sorry! No bike found with the provided ID',
             success: false,
-            err,
+            error: err instanceof Error ? err.message : 'Unknown error',
+            data: {},
         });
     }
 });
-//5. Delete a Bike
+//5.  Delete a Bike
 const deleteBike = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.params.bikeId;
+        // check if bikeId exists or not
+        if (!id) {
+            throw new Error('Bike ID is required to delete a bike');
+        }
         const result = yield bike_service_1.BikeService.deleteBikeFromDB(id);
         if (result) {
-            res.send({
-                message: 'Bike deleted successfully',
+            // iff the bike is found and deleted
+            res.status(200).send({
+                message: 'Bike deleted successfully!',
                 status: true,
                 data: {},
             });
         }
         else {
-            res.send({
-                message: 'Sorry! No Bike found',
-                status: true,
-                data: {},
-            });
+            // if no bike is found with the provided ID
+            throw new Error('Sorry! No bike found with the provided ID!');
         }
     }
     catch (err) {
-        res.json({
-            message: 'Sorry! No Bike found',
+        res.status(500).json({
+            message: 'Sorry! No data found with the provided ID!',
             success: false,
-            err,
+            error: err instanceof Error ? err.message : 'Unknown error',
+            data: {},
         });
     }
 });
